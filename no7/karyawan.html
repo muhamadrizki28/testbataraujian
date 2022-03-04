@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NO 7 - Test Batara</title>
+    <style>
+      table thead > tr {
+        color: #fff;
+      }
+      table {
+        border: 1px solid gray;
+        border-radius: 10px 0;
+        box-shadow: 40px 40px 20px aqua;
+      }
+      h3 {
+        font-weight: bolder;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      //   array Associative
+      let karyawan = {
+        Agus: 'Junior Officer',
+        Dina: 'Ass. Manager',
+        Joko: 'Manager',
+        Ahmad: 'Middle Officer',
+        Felicia: 'Senior Officer',
+      };
+
+      let region = {
+        Agus: 'Semarang',
+        Dina: 'Bandung',
+        Joko: 'Jakarta',
+        Ahmad: 'Jakarta',
+        Felicia: 'Bandung',
+      };
+
+      let judul = ['ID', 'Nama', 'Gaji/Bulan', 'Level Jabatan', 'Region', 'Tunjangan', 'Gaji+Tunjab', 'Pemotongan', 'Total+Bonus'];
+    </script>
+    <h3 align="center">Daftar Karyawan</h3>
+    <table align="center" cellpadding="10" cellspacing="0" width="40%">
+      <thead>
+        <tr bgcolor="#2D31FA">
+          <script>
+            for (let jdl of Object.keys(judul)) {
+              document.write(`<th>${judul[jdl]}</th>`);
+            }
+          </script>
+        </tr>
+      </thead>
+      <tbody>
+        <script>
+          // Number
+          let no = 1;
+          for (let k of Object.keys(karyawan, region)) {
+            //warna-warni
+            let warna = no % 2 == 1 ? '#DFF6FF' : '#5D8BF4';
+
+            let gapok;
+            let rupiah = Intl.NumberFormat('id-ID');
+            let jabatan = karyawan[k];
+
+            if (jabatan == 'Junior Officer') gapok = 8000000;
+            else if (jabatan == 'Ass. Manager') gapok = 15000000;
+            else if (jabatan == 'Manager') gapok = 25000000;
+            else if (jabatan == 'Middle Officer') gapok = 13000000;
+            else if (jabatan == 'Senior Officer') gapok = 12500000;
+            else jabatan = '';
+
+            // Tunjab
+            let tunjab;
+            if (gapok > 15000000) {
+              tunjab = (10 / 100) * gapok;
+            } else if (gapok > 10000000 && gapok < 15000000) {
+              tunjab = (12 / 100) * gapok;
+            } else {
+              tunjab = (15 / 100) * gapok;
+            }
+
+            // Total Gaji + Tunjab
+            total_gaji = gapok + tunjab;
+
+            // Pemotongan
+            let pemotongan;
+            let asal = region[k];
+
+            if (k && asal == 'Semarang') pemotongan = total_gaji / 3;
+            else if (k && asal == 'Bandung') pemotongan = total_gaji / 2;
+            else if (k && asal == 'Jakarta') pemotongan = total_gaji / 2;
+            else asal = '';
+
+            let total_gaji_all = total_gaji - pemotongan;
+            // Bonus
+            let bonus;
+            let posisi = karyawan[k];
+
+            if (posisi == 'Junior Officer') bonus = total_gaji_all + 100000;
+            else if (posisi == 'Ass. Manager') bonus = total_gaji_all + 175000;
+            else if (posisi == 'Manager') bonus = total_gaji_all + 250000;
+            else if (posisi == 'Middle Officer') bonus = total_gaji_all + 125000;
+            else if (posisi == 'Senior Officerr') bonus = total_gaji_all + 150000;
+            else posisi = '';
+
+            // output
+            document.write(`<tr bgcolor="${warna}">
+                    <td>${no++}</td>
+                    <td>${k}</td>
+                    <td>Rp.${rupiah.format(gapok)}</td>
+                    <td>${karyawan[k]}</td>
+                    <td>${region[k]}</td>
+                    <td>Rp.${rupiah.format(tunjab)}</td>
+                    <td>Rp.${rupiah.format(total_gaji)}</td>
+                    <td>Rp.${rupiah.format(pemotongan)}</td>
+                    <td>Rp.${rupiah.format(bonus)}</td>
+                </tr>`);
+          }
+        </script>
+      </tbody>
+    </table>
+  </body>
+</html>
